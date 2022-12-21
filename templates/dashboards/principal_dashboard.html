@@ -1,0 +1,106 @@
+{% extends 'dashboards/base_dashboard.html' %}
+{% load static %}
+
+{% block content %}
+        <div class="row p-3 text-white text-center" id="today-stats" >
+                <h5 class="text-primary stats-heading">Today Stats</h5>
+            <div style="background: #29d4be;" class="col">
+                <h5>College Campus</h5>
+                <h4>{{college_campus}}</h4>
+            </div>
+            <div style="background: #6147b1;" class="col">
+                <h5>Admission work</h5>
+                <h4>{{admission_work}}</h4>
+            </div>
+            
+            <div style="background: #5AA6F7;" class="col">
+                <h5>Counselling Duty</h5>
+                <h4>{{counselling}}</h4>
+            </div>
+            <div style="background: #F8C771;" class="col">
+                <h5>AU</h5>
+                <h4>{{au}}</h4>
+            </div>
+            <div style="background: #29d4be;" class="col">
+                <h5>On Duty</h5>
+                <h4>{{duty}}</h4>
+            </div>
+            <div style="background: #6672F9;" class="col">
+                <h5>Permission</h5>
+                <h4>{{permission}}</h4>
+            </div>
+            <div style="background: #e25a73;" class="col">
+                <h5>Leave</h5>
+                <h4>{{leave}}</h4>
+            </div>
+            <div style="background: #6147b1;" class="col">
+                <h5>Other</h5>
+                <h4>{{other}}</h4>
+            </div>
+        </div>
+        <!-- <form class="filter" accept="dahboard" method="GET">
+            {{filterForm.form}}
+            <button class="btn btn-primary">Submit</button>
+        </form> -->
+        <div id="principal-dashboard">
+            <form  method="GET" action="{% url 'principalDashboard' %}">
+                <div class="input-group">
+                    <label for="">Department</label>
+                    {{filterForm.employee__dept}}
+                </div>
+                <div class="input-group">
+                    <label for="">Location</label>
+                    {{filterForm.location}}
+                </div>
+                <div class="input-group">
+                    <label for="">From Date</label>
+                    <input type="date" name="startDate"> 
+                </div>
+                <div class="input-group">
+                    <label for="">To Date</label>
+                    <input type="date" name="endDate">
+                </div>
+                <div class="filter-btn">
+                    <button style="width: 100px;" type="submit" class="btn btn-primary">Filter</button>
+                </div>
+            </form>
+            <div class="lop-title mt-2 d-flex justify-content-start">
+                <button id="button-excel">Export Excel</button>
+            </div>
+        <table class="table table-striped table-hover mt-5 " id="loptable">
+            <thead class="bg-primary text-white">
+                <tr>
+                <th scope="col">NAME</th>
+                <th scope="col">DEPARTMENT</th>
+                <th scope="col">LOCATION</th>
+                <th scope="col">TIME</th>
+                <th scope="col">MAP LINK</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for a in attendances %}
+                        <tr>
+                            <th scope="row">{{a.employee}}</th>
+                            <td>{{a.employee.dept}}</td>
+                            <td>
+                                {% if a.location == 'other' %}
+                                    {{a.other}}
+                                {% else %} 
+                                    {{a.location}}
+                                {% endif %}
+
+                            </td>
+                            <td>{{a.dateTime }}</td>
+                            <td><a target="blank" href="{{a.maplink}}">view map</a></td>
+                        </tr>
+                {% endfor %}
+            </tbody>
+            </table>
+    </div>   
+    <script>
+        const select = document.querySelectorAll("select")
+        select.forEach(s => {
+            s.classList.add("form-select")
+        })
+    </script>     
+{% endblock %}

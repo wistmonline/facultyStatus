@@ -1,0 +1,36 @@
+#leave-form .radio{
+    box-shadow: none;
+    height: 20px;
+}
+#leave-form input {
+    margin-top: 10px;
+}
+#leave-form  {
+    margin-top: 0px;
+}
+#leave-form  textarea{
+    margin-top: 10px;
+    border: none;
+    padding: 10px;
+}
+.available-leaves {
+    display: flex;
+    justify-content: center;
+}
+.available-leaves .category {
+    margin: 10px;
+    text-align: center;
+}
+.half-day {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.l-category {
+    color: #38ad90;
+}
+.leave-status table {
+    overflow-x: scroll !important;
+  }
+  
+

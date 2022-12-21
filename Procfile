@@ -1,0 +1,1 @@
+web: gunicorn facultyStatus.wsgi --log-file -

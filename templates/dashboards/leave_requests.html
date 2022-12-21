@@ -1,0 +1,68 @@
+{% extends 'dashboards/base_dashboard.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="leave-requests">
+      {% if messages %}
+        {% for message  in messages %}
+          <p id="message" class="alert alert-{{message.tags}}">{{message}}</p>
+        {% endfor %}
+      {% endif %}
+      <div class="row">
+        {% if not requests %} <h3>No Leave requests</h3> {% endif %} 
+            {% for r in requests %}
+              <div class="card p-0">
+                <div class="card-body">
+                  <table class="table table-striped p-0">
+                    <tbody>
+                      <tr>
+                        <th scope="row">Name :</th>
+                        <td>{{r.employee}}</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">DEPT :</th>
+                        <td>{{r.employee.dept}}</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">No of Days :</th>
+                        <td>{% if r.no_of_days == 0.5 %}Half Day {% else %}{{r.no_of_days |floatformat}}{% endif %}</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">From date :</th>
+                        <td>{{r.from_date}}</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">To date :</th>
+                        <td>{{r.to_date}}</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Category :</th>
+                        <td>{{r.category}}</td>
+                      </tr>
+                      {% if r.emergency %}
+                      <tr>
+                        <th scope="row">Type :</th>
+                        <td class="text-danger">Emergency</td>
+                      </tr>
+                      {% endif %}
+                      <tr>
+                        <th scope="row">Reason :</th>
+                        <td>{{r.reason}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                    <div class="ctns">
+                      {% if request.user.is_admin %}
+                        <a href="{% url 'leaveRejectPrincipal' r.id %}" class="btn btn-reject">Reject</a>
+                        <a href="{% url 'leaveApprovePrincipal' r.id %}" class="btn btn-approve">Approve</a>
+                      {% elif request.user.is_staff %}  
+                        <a href="{% url 'leaveRejectHod' r.id %}" class="btn btn-reject">Reject</a>
+                        <a href="{% url 'leaveApproveHod' r.id %}" class="btn btn-approve">Approve</a>
+                      {% endif %}  
+                    </div>
+                </div>
+              </div>
+            {% endfor %}
+        </div>      
+    </div>
+{% endblock %}

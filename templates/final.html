@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container">
+        <h2 style="font-weight: bold;">
+            <span class="text-success">{{user.name}}</span> 
+            {{message}}.</h2>
+    </div>
+{% endblock %}

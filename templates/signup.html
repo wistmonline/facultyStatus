@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <div class="form-container">
+        <p>Already have an Account! <a href="{% url 'loginUser' %}">Login</a></p>
+        <p class="text-danger">{{message}}</p>
+    <form action="signup" method="POST">
+        {% csrf_token %}
+    {{signupForm}}
+
+        <p id="message" class="text-danger mt-2"></p>
+        <button id="submit" type="submit">Create Account</button>
+    </form>
+    </div>
+    <script>
+		const p1 = document.getElementById('id_password')
+		const p2 = document.getElementById('id_confirm_password')
+        const submit= document.getElementById('submit')
+        const message = document.getElementById('message')
+
+        p2.addEventListener('keyup', check)
+
+        function check() {
+            if (p1.value.length <= p2.value.length){
+                if (p1.value == p2.value) {
+                    p1.style.background = '#83ffac';
+                    p2.style.background = '#83ffac';
+                    message.innerText = ""
+
+                  } else {
+                      p1.style.background = '#ff6767';
+                      p2.style.background = '#ff6767';
+                      message.innerText = "Password not matched"
+                  }
+            }
+            
+          }
+
+	</script>
+    </div>
+{% endblock %}

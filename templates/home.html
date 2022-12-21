@@ -1,0 +1,69 @@
+{% extends 'dashboards/base_dashboard.html' %}
+{% load static %}
+
+{% block content %}
+<h6 class="mt-2 text-center" >Mark your Attendance at 9am , 12:30pm and 4pm</h6>
+
+
+<div class="container">
+    <div class="form-container">
+
+        <p class="text-success">{{message}}</p>
+        <p class="text-danger" id="message" ></p>
+
+        <form action="/" method="POST">
+            {% csrf_token %}
+            <label for="location">Location</label>  
+            {{form.location}}
+            <div class="mt-2" id="other-input"></div>
+            <button id="live-location"><img width="30px" height="30px" src="{% static 'img/location.svg' %}" >Allow Location</button>
+            <input value=""  required name="latitude" id="latitude">    
+            <input value=""  required name="longitude" id="longitude">    
+            <button id="submit" type="submit">SUBMIT</button>
+        </form>
+      </div>
+    </div>
+    <script>
+        const selectLocation = document.getElementById("id_location")
+        selectLocation.classList.add("form-select")
+        const otherInput = document.getElementById('other-input')
+
+        selectLocation.addEventListener('change', (e)=>{
+            if(selectLocation.value == 'other'){
+                otherInput.innerHTML = '<input autocomplete="off"  placeholder="Enter Other location" required name="other" id="other">' 
+            }
+            else{
+                otherInput.innerHTML = ""
+            }
+        })
+        const locationBtn = document.getElementById("live-location")
+        const latitude = document.getElementById('latitude')
+        const longitude = document.getElementById('longitude')
+        const submit = document.querySelector('#submit')
+        const message = document.getElementById('message')
+        // Get user live location
+
+        locationBtn.addEventListener('click', function() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            }
+            else{
+                alert('Your browser does not support Location.. Try in other browser..')
+            }
+            
+            function showPosition(position){
+                latitude.value = position.coords.latitude
+                longitude.value = position.coords.longitude
+                locationBtn.style.background = "#058a8a" //notifying user that he allowed the location
+                locationBtn.innerText = "Tracked Location.."
+            }
+        })
+        
+        submit.addEventListener('click', function(){
+            if(latitude.value === "" || longitude.value===""){
+                message.innerText = 'Please allow your location'
+            }
+        })
+
+    </script>
+{% endblock  %}

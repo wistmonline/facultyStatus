@@ -1,0 +1,38 @@
+{% extends 'dashboards/base_dashboard.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="lopStatement">
+        <div class="lop-title">
+            <h2>Lop Statement</h2>
+            <button id="button-excel">Export Excel</button>
+        </div>
+
+    <table id="loptable" data-cols-width="70,15,10"  class="table table-striped table-hover m-5">
+        <thead class="bg-primary text-white">
+            <tr>
+            <th scope="col">NAME</th>
+            <th scope="col">DEPARTMENT</th>
+            <th scope="col">CL</th>
+            <th scope="col">EL</th>
+            <th scope="col">CO</th>
+            <th scope="col">LOP</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for a in faculty_list %}
+                    <tr>
+                        <th scope="row">{{a.employee}}</th>
+                        <td>{{a.employee.dept}}</td>
+                        <td>{{a.casual_leaves}}</td>
+                        <td>{{a.earn_leaves }}</td>
+                        <td>{{a.compensation_leaves }}</td>
+                        <td>{{a.loss_of_pay }}</td>
+                    </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+    </div>
+
+   
+{% endblock %}
