@@ -86,7 +86,7 @@ WSGI_APPLICATION = 'facultyStatus.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-    # ===== Heroku Deployed one =======
+   # ===== Heroku Deployed one =======
     # 'default': {
     #     'ENGINE': 'django.db.backends.postgresql',
     #     'NAME': 'd4iot7n8a7hhhi',
@@ -96,11 +96,15 @@ DATABASES = {
     #     'PORT': '5432'
     # }
 
+        'default': dj_database_url.config(
+            default='postgres://wistm:YNq7MFuMK40UNWF9PHEVFY0HIpe6ixin@dpg-ceh9lj02i3mqvl8i4dc0-a.singapore-postgres.render.com/wistm',
+        )
 
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # }
 }
 
 
